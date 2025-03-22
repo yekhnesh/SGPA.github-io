@@ -1,0 +1,107 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #232526, #414345);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Calculator Container */
+#calculator {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 25px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+/* Heading */
+h2 {
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* Input Fields and Labels */
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+select, input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Buttons */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 5px 0;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #4ca1af, #2c3e50);
+    transform: scale(1.05);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #27ae60;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+tr:hover {
+    background: #dff9fb;
+}
+
+/* SGPA Display */
+.sgpa-display {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    color: #2c3e50;
+}
