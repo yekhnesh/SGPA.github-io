@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polytechnic SGPA Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #232526, #414345);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        #calculator {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 25px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 5px 0;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #4ca1af, #2c3e50);
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #27ae60;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        tr:hover {
+            background: #dff9fb;
+        }
+
+        .sgpa-display {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h2>Polytechnic SGPA Calculator</h2>
+        <br>
+
+        <div class="input-group">
+            <label for="course">Select Diploma Course:</label>
+            <select id="course" onchange="updateSemesters()">
+                <option value="Civil Engineering">Diploma in Civil Engineering</option>
+                <option value="Mechanical Engineering">Diploma in Mechanical Engineering</option>
+                <option value="Electrical Engineering">Diploma in Electrical Engineering</option>
+                <option value="Electronics and Communication Engineering">Diploma in Electronics and Communication Engineering</option>
+                <option value="Computer Science and Engineering">Diploma in Computer Science and Engineering</option>
+                <option value="Information Technology">Diploma in Information Technology</option>
+                <option value="Automobile Engineering">Diploma in Automobile Engineering</option>
+                <option value="Aeronautical Engineering">Diploma in Aeronautical Engineering</option>
+                <option value="Mining Engineering">Diploma in Mining Engineering</option>
+                <option value="Robotics and Automation Engineering">Diploma in Robotics and Automation Engineering</option>  
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="semester">Select Semester:</label>
+            <select id="semester" onchange="updateSubjects()"></select>
+        </div>
+
+        <form id="sgpaForm">
+            <div class="input-group">
+                <label for="subject">Select Subject:</label>
+                <select id="subject"></select>
+            </div>
+
+            <div class="input-group">
+                <label for="totalMarks">Enter Total Marks:</label>
+                <input type="number" id="totalMarks" min="1" required>
+            </div>
+
+            <div class="input-group">
+                <label for="marks">Enter Marks Obtained:</label>
+                <input type="number" id="marks" min="0" required>
+            </div>
+
+            <div class="button-container">
+                <button type="button" onclick="addSubject()">Add Subject</button>
+                <button type="button" onclick="calculateSGPA()">Calculate SGPA</button>
+                <button type="button" onclick="clearAll()">Clear All</button>
+            </div>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks Obtained</th>
+                    <th>Total Marks</th>
+                    <th>Percentage</th>
+                    <th>Grade</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="subjectTable"></tbody>
+        </table>
+
+        <div class="sgpa-display" id="sgpaDisplay"></div>
+    </div>
+
+    <script>
+        let subjectsByCourse = {
+            "Civil Engineering": {
+                "Semester 1": ["Common Subjects"],
+                "Semester 2": ["Common Subjects"],
+                "Semester 3": ["Surveying-II", "Structural Mechanics", "Hydraulics", "Building Drawing", "Estimating & Costing-I"],
+                "Semester 4": ["Steel Structure Design", "Water Supply & Waste Water Engineering", "Geotechnical Engineering", "Transportation Engineering", "Estimating & Costing-II"],
+                "Semester 5": ["Advanced RCC Design", "Environmental Engineering", "Construction Management", "Earthquake Engineering"],
+                "Semester 6": ["Project Work", "Industrial Training", "Entrepreneurship Development"]
+            },
+            "Mechanical Engineering": {
+                "Semester 1": ["Common Subjects"],
+                "Semester 2": ["Common Subjects"],
+                "Semester 3": ["Thermodynamics", "Fluid Mechanics", "Strength of Materials", "Machine Drawing"],
+                "Semester 4": ["Manufacturing Processes", "Theory of Machines", "Heat & Mass Transfer", "Production Technology"],
+                "Semester 5": ["Automobile Engineering", "Mechatronics", "Industrial Engineering"],
+                "Semester 6": ["Robotics", "Project Work", "Internship"]
+            },
+            "Electrical Engineering": {
+                "Semester 1": ["Common Subjects"],
+                "Semester 2": ["Common Subjects"],
+                "Semester 3": ["Electrical Circuits", "Electrical Machines-I", "Electrical & Electronic Measurements"],
+                "Semester 4": ["Electrical Machines-II", "Power Systems", "Digital Electronics"],
+                "Semester 5": ["Power Electronics", "Electrical Drives", "Renewable Energy Systems"],
+                "Semester 6": ["PLC & SCADA", "Smart Grid Technologies", "Project Work"]
+            },
+            "Electronics and Communication Engineering": {
+                "Semester 1": ["Common Subjects"],
+                "Semester 2": ["Common Subjects"],
+                "Semester 3": ["Analog Electronics", "Digital Electronics", "Microprocessor & Microcontrollers", "Network Theory", "Circuit Design"],
+                "Semester 4": ["Communication Systems", "Embedded Systems", "Electronic Instruments", "Antenna & Wave Propagation", "VLSI Technology"],
+                "Semester 5": ["IoT & Wireless Sensor Networks", "Optical Fiber Communication", "Microwave Engineering", "Artificial Intelligence in Electronics"],
+                "Semester 6": ["Mobile & Satellite Communication", "Robotics & Automation", "Project Work", "Internship"]
+            },
+            "Computer Science and Engineering": {
+                "Semester 1": ["Common Subjects"],
+                "Semester 2": ["Common Subjects"],
+                "Semester 3": ["Data Structures & Algorithms", "Computer Networks", "Database Management System (DBMS)", "Operating Systems", "Web Technology"],
+                "Semester 4": ["Software Engineering", "Object-Oriented Programming (Java, Python)", "Computer Graphics", "Cloud Computing", "Cyber Security"],
+                "Semester 5": ["Machine Learning & AI", "Mobile App Development", "Ethical Hacking", "Data Analytics", "Internet of Things (IoT)"],
+                "Semester 6": ["Full Stack Development", "Big Data Technologies", "Project Work", "Industrial Training"]
+            },
+            "Information Technology": {
+                "Semester 1": ["Common with CSE"],
+                "Semester 2": ["Common with CSE"],
+                "Semester 3": ["Database Management Systems", "Web Development", "Networking & Security", "Programming in C/C++"],
+                "Semester 4": ["Software Testing", "Cloud Computing", "Mobile Computing", "AI & Machine Learning"],
+                "Semester 5": ["Cyber Security", "Blockchain Technology", "Digital Marketing", "UI/UX Design"],
+                "Semester 6": ["Data Science", "Internship", "Project Work"]
+            },
+             "Automobile Engineering": {
+                "Semester 1": ["Common with Mechanical"],
+                "Semester 2": ["Common with Mechanical"],
+                "Semester 3": ["Automobile Engines", "Transmission & Power Train", "Fuel & Emission Control", "Automotive Electrical Systems"],
+                "Semester 4": ["Chassis & Body Engineering", "Vehicle Dynamics", "Advanced Manufacturing in Automobiles", "Electric & Hybrid Vehicles"],
+                "Semester 5": ["Automotive Safety & Maintenance", "Automobile Air Conditioning", "Motor Vehicle Act & Insurance", "Alternative Fuels"],
+                "Semester 6": ["Autonomous Vehicles", "Project Work", "Industrial Training"]
+            },
+            "Aeronautical Engineering": {
+                "Semester 1": ["Common with Mechanical"],
+                "Semester 2": ["Common with Mechanical"],
+                "Semester 3": ["Aerodynamics", "Aircraft Structures", "Aircraft Propulsion", "Engineering Thermodynamics"],
+                "Semester 4": ["Flight Mechanics", "Aircraft Materials & Manufacturing", "Avionics & Instrumentation", "Aircraft Maintenance Engineering"],
+                "Semester 5": ["Aerospace Systems & Navigation", "Space Technology", "UAV & Drone Technology", "Computational Fluid Dynamics"],
+                "Semester 6": ["Aircraft Design Project", "Industrial Internship"]
+            },
+            "Mining Engineering": {
+                "Semester 1": ["Common with Civil"],
+                "Semester 2": ["Common with Civil"],
+                "Semester 3": ["Mining Geology", "Mine Surveying", "Drilling & Blasting", "Mine Ventilation"],
+                "Semester 4": ["Mining Machinery", "Surface Mining", "Underground Mining Methods", "Rock Mechanics"],
+                "Semester 5": ["Mine Safety & Disaster Management", "Mineral Processing", "Mine Economics", "Open Cast Mining"],
+                "Semester 6": ["Environmental Management in Mining", "Internship", "Project Work"]
+            },
+            "Robotics and Automation Engineering": {
+                "Semester 1": ["Common with Mechanical & Electronics"],
+                "Semester 2": ["Common with Mechanical & Electronics"],
+                "Semester 3": ["Fundamentals of Robotics", "Sensors & Actuators", "Embedded Systems", "Control System Engineering"],
+                "Semester 4": ["Industrial Automation", "PLC & SCADA", "Robotics Programming", "Artificial Intelligence in Robotics"],
+                "Semester 5": ["Mechatronics & Robotics Integration", "Computer Vision", "3D Printing & Rapid Prototyping", "IoT & Smart Robotics"],
+                "Semester 6": ["Humanoid Robotics", "Autonomous Vehicles & Drones", "Internship", "Major Project"]
+            },
+ 
+        };
+
+        function updateSemesters() {
+            let course = document.getElementById("course").value;
+            let semesterDropdown = document.getElementById("semester");
+            semesterDropdown.innerHTML = "";
+            for (let semester in subjectsByCourse[course]) {
+                let option = document.createElement("option");
+                option.value = semester;
+                option.textContent = semester;
+                semesterDropdown.appendChild(option);
+            }
+            updateSubjects();
+        }
+
+        function updateSubjects() {
+            let course = document.getElementById("course").value;
+            let semester = document.getElementById("semester").value;
+            let subjectDropdown = document.getElementById("subject");
+            subjectDropdown.innerHTML = "";
+            subjectsByCourse[course][semester].forEach(subject => {
+                let option = document.createElement("option");
+                option.value = subject;
+                option.textContent = subject;
+                subjectDropdown.appendChild(option);
+            });
+        }
+
+        function addSubject() {
+            let table = document.getElementById("subjectTable");
+            let subject = document.getElementById("subject").value;
+            let marks = parseFloat(document.getElementById("marks").value);
+            let totalMarks = parseFloat(document.getElementById("totalMarks").value);
+            let percentage = ((marks / totalMarks) * 100).toFixed(2);
+            let grade = percentage >= 90 ? 10 : percentage >= 75 ? 8 : percentage >= 60 ? 6 : percentage >= 50 ? 5 : 0;
+            let row = `<tr><td>${subject}</td><td>${marks}</td><td>${totalMarks}</td><td>${percentage}%</td><td>${grade}</td><td><button onclick="this.parentNode.parentNode.remove()">Delete</button></td></tr>`;
+            table.innerHTML += row;
+        }
+
+        function calculateSGPA() {
+            let rows = document.querySelectorAll("#subjectTable tr");
+            let totalGradePoints = 0, totalSubjects = rows.length;
+            rows.forEach(row => {
+                totalGradePoints += parseInt(row.cells[4].textContent);
+            });
+            let sgpa = (totalGradePoints / totalSubjects).toFixed(2);
+            document.getElementById("sgpaDisplay").textContent = `SGPA: ${sgpa}`;
+        } 
+        function clearAll() {
+            // Clear the subject table
+            document.getElementById("subjectTable").innerHTML = "";
+
+            // Reset input fields
+            document.getElementById("totalMarks").value = "";
+            document.getElementById("marks").value = "";
+
+            // Reset SGPA display
+            document.getElementById("sgpaDisplay").textContent = "";
+
+            // Reset dropdown selections to the first option
+            document.getElementById("course").selectedIndex = 0;
+        updateSemesters();
+        }
+        function addSubject() {
+            let table = document.getElementById("subjectTable");
+            let subject = document.getElementById("subject").value;
+            let marks = parseFloat(document.getElementById("marks").value);
+            let totalMarks = parseFloat(document.getElementById("totalMarks").value);
+
+        if (isNaN(marks) || isNaN(totalMarks) || marks > totalMarks || marks < 0) {
+            alert("Please enter valid marks!");
+            return;
+            }
+
+            let percentage = ((marks / totalMarks) * 100).toFixed(2);
+
+            // Grade Calculation
+            let grade;
+            if (percentage >= 90) grade = "A+";
+            else if (percentage >= 80) grade = "A";
+            else if (percentage >= 70) grade = "B";
+            else if (percentage >= 60) grade = "C";
+            else if (percentage >= 50) grade = "D";
+            else grade = "F";
+
+            let row = `<tr>
+                <td>${subject}</td>
+                <td>${marks}</td>
+                <td>${totalMarks}</td>
+                <td>${percentage}%</td>
+                <td>${grade}</td>
+                <td><button onclick="this.parentNode.parentNode.remove()">Delete</button></td>
+            </tr>`;
+
+            table.innerHTML += row;
+        }
+
+
+        updateSemesters();
+    </script>
+</body>
+</html>
