@@ -259,6 +259,31 @@
             },
  
         };
+        function updateSemesters() {  
+            let course = document.getElementById("course").value;  
+            let semesterDropdown = document.getElementById("semester");  
+            semesterDropdown.innerHTML = "";  
+            for (let semester in subjectsByCourse[course]) {  
+                let option = document.createElement("option");  
+                option.value = semester;  
+                option.textContent = semester;  
+                semesterDropdown.appendChild(option);  
+            }  
+            updateSubjects();  
+        }  
+  
+        function updateSubjects() {  
+            let course = document.getElementById("course").value;  
+            let semester = document.getElementById("semester").value;  
+            let subjectDropdown = document.getElementById("subject");  
+            subjectDropdown.innerHTML = "";  
+            subjectsByCourse[course][semester].forEach(subject => {  
+                let option = document.createElement("option");  
+                option.value = subject;  
+                option.textContent = subject;  
+                subjectDropdown.appendChild(option);  
+            });  
+        }  
 
         function addSubject() {
     let table = document.getElementById("subjectTable");
