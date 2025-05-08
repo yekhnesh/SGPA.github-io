@@ -260,122 +260,38 @@
  
         };
 
-        function updateSemesters() {
-            let course = document.getElementById("course").value;
-            let semesterDropdown = document.getElementById("semester");
-            semesterDropdown.innerHTML = "";
-            for (let semester in subjectsByCourse[course]) {
-                let option = document.createElement("option");
-                option.value = semester;
-                option.textContent = semester;
-                semesterDropdown.appendChild(option);
-            }
-            updateSubjects();
-        }
-
-        function updateSubjects() {
-            let course = document.getElementById("course").value;
-            let semester = document.getElementById("semester").value;
-            let subjectDropdown = document.getElementById("subject");
-            subjectDropdown.innerHTML = "";
-            subjectsByCourse[course][semester].forEach(subject => {
-                let option = document.createElement("option");
-                option.value = subject;
-                option.textContent = subject;
-                subjectDropdown.appendChild(option);
-            });
-        }
-
         function addSubject() {
-            let table = document.getElementById("subjectTable");
-            let subject = document.getElementById("subject").value;
-            let marks = parseFloat(document.getElementById("marks").value);
-            let totalMarks = parseFloat(document.getElementById("totalMarks").value);
-            let percentage = ((marks / totalMarks) * 100).toFixed(2);
-            let grade = percentage >= 90 ? 10 : percentage >= 75 ? 8 : percentage >= 60 ? 6 : percentage >= 50 ? 5 : 0;
-            let row = `<tr><td>${subject}</td><td>${marks}</td><td>${totalMarks}</td><td>${percentage}%</td><td>${grade}</td><td><button onclick="this.parentNode.parentNode.remove()">Delete</button></td></tr>`;
-            table.innerHTML += row;
-        }
+    let table = document.getElementById("subjectTable");
+    let subject = document.getElementById("subject").value;
+    let marks = parseFloat(document.getElementById("marks").value);
+    let totalMarks = parseFloat(document.getElementById("totalMarks").value);
 
-        function calculateSGPA() {
-            let rows = document.querySelectorAll("#subjectTable tr");
-            let totalGradePoints = 0, totalSubjects = rows.length;
+    if (isNaN(marks) || isNaN(totalMarks) || totalMarks <= 0 || marks > totalMarks) {
+        alert("Please enter valid marks.");
+        return;
+    }
 
-            const gradePoints = {
-                "S": 10,
-                "A": 9,
-                "B": 8,
-                "C": 7,
-                "D": 6,
-                "F": 0
-            };
+    let percentage = ((marks / totalMarks) * 100).toFixed(2);
+    let grade;
 
-            if (totalSubjects === 0) {
-                alert("Please add at least one subject before calculating SGPA.");
-                return;
-            }
+    if (percentage >= 90) grade = "S";
+    else if (percentage >= 80) grade = "A";
+    else if (percentage >= 70) grade = "B";
+    else if (percentage >= 60) grade = "C";
+    else if (percentage >= 50) grade = "D";
+    else if (percentage >= 40) grade = "E";   
+    else grade = "F";
 
-            rows.forEach(row => {
-                let grade = row.cells[4].textContent.trim();
-                totalGradePoints += gradePoints[grade] || 0;  // Ensure invalid grades default to 0
-            });
-
-            let sgpa = (totalGradePoints / totalSubjects).toFixed(2);
-            document.getElementById("sgpaDisplay").textContent = `SGPA: ${sgpa}`;
-        } 
-
-        
-        function clearAll() {
-            // Clear the subject table
-            document.getElementById("subjectTable").innerHTML = "";
-
-            // Reset input fields
-            document.getElementById("totalMarks").value = "";
-            document.getElementById("marks").value = "";
-
-            // Reset SGPA display
-            document.getElementById("sgpaDisplay").textContent = "";
-
-            // Reset dropdown selections to the first option
-            document.getElementById("course").selectedIndex = 0;
-        updateSemesters();
-        }
-        function addSubject() {
-            let table = document.getElementById("subjectTable");
-            let subject = document.getElementById("subject").value;
-            let marks = parseFloat(document.getElementById("marks").value);
-            let totalMarks = parseFloat(document.getElementById("totalMarks").value);
-
-        if (isNaN(marks) || isNaN(totalMarks) || marks > totalMarks || marks < 0) {
-            alert("Please enter valid marks!");
-            return;
-            }
-
-            let percentage = ((marks / totalMarks) * 100).toFixed(2);
-
-            // Grade Calculation
-            let grade;
-            if (percentage >= 90) grade = "A+";
-            else if (percentage >= 80) grade = "A";
-            else if (percentage >= 70) grade = "B";
-            else if (percentage >= 60) grade = "C";
-            else if (percentage >= 50) grade = "D";
-            else grade = "F";
-
-            let row = `<tr>
-                <td>${subject}</td>
-                <td>${marks}</td>
-                <td>${totalMarks}</td>
-                <td>${percentage}%</td>
-                <td>${grade}</td>
-                <td><button onclick="this.parentNode.parentNode.remove()">Delete</button></td>
-            </tr>`;
-
-            table.innerHTML += row;
-        }
-
-
-        updateSemesters();
+    let row = `<tr>
+        <td>${subject}</td>
+        <td>${marks}</td>
+        <td>${totalMarks}</td>
+        <td>${percentage}%</td>
+        <td>${grade}</td>
+        <td><button onclick="this.parentNode.parentNode.remove()">Delete</button></td>
+    </tr>`;
+    table.innerHTML += row;
+}
     </script>
 </body>
 </html>
