@@ -297,7 +297,7 @@
         }
 
         let percentage = ((marks / totalMarks) * 100).toFixed(2);
-        let grade = percentage >= 90 ? 10 : percentage >= 75 ? 8 : percentage >= 60 ? 6 : percentage >= 50 ? 5 : 0;
+        let grade = percentage >= 90 ? S : percentage >= 75 ? A : percentage >= 60 ? B : percentage >= 50 ? C: F;
 
         let row = `
             <tr>
