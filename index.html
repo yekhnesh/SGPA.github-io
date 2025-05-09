@@ -297,7 +297,10 @@
         }
 
         let percentage = ((marks / totalMarks) * 100).toFixed(2);
-        let grade = percentage >= 90 ? S : percentage >= 75 ? A : percentage >= 60 ? B : percentage >= 50 ? C: F;
+        let grade = percentage >= 90 ? "S" :
+                    percentage >= 75 ? "A" :
+                    percentage >= 60 ? "B" :
+                    percentage >= 50 ? "C" : "F";
 
         let row = `
             <tr>
@@ -313,6 +316,17 @@
         table.innerHTML += row;
     }
 
+    function getGradePoint(grade) {
+        switch (grade) {
+            case "S": return 10;
+            case "A": return 9;
+            case "B": return 8;
+            case "C": return 7;
+            case "F": return 0;
+            default: return 0;
+        }
+    }
+
     function calculateSGPA() {
         let rows = document.querySelectorAll("#subjectTable tr");
         if (rows.length === 0) {
@@ -322,7 +336,8 @@
 
         let totalGradePoints = 0;
         rows.forEach(row => {
-            totalGradePoints += parseInt(row.cells[4].textContent);
+            let grade = row.cells[4].textContent;
+            totalGradePoints += getGradePoint(grade);
         });
 
         let sgpa = (totalGradePoints / rows.length).toFixed(2);
@@ -335,6 +350,9 @@
         document.getElementById("marks").value = "";
         document.getElementById("totalMarks").value = "";
     }
+
+    // Initialize on load
+    window.onload = updateSemesters;
 </script>
 
 </body>
