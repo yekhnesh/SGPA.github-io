@@ -340,28 +340,28 @@
         }
     }
 
-    function calculateSGPA() {
-        let rows = document.querySelectorAll("#subjectTable tr");
-        if (rows.length === 0) {
-            alert("Please add at least one subject.");
-            return;
-        }
+   function calculateSGPA() {
+    const gradeMap = {
+        "A+": 10,
+        "A": 9,
+        "B": 8,
+        "C": 7,
+        "D": 6,
+        "F": 0
+    };
 
-        let totalCredits = 0;
-        let totalWeightedPoints = 0;
+    let rows = document.querySelectorAll("#subjectTable tr");
+    let totalGradePoints = 0, totalSubjects = rows.length;
 
-        rows.forEach(row => {
-            let grade = row.cells[4].textContent;
-            let credit = parseFloat(row.cells[5].textContent);
-            let gradePoint = gradeToPoint(grade);
+    rows.forEach(row => {
+        let grade = row.cells[4].textContent;
+        totalGradePoints += gradeMap[grade] || 0;
+    });
 
-            totalWeightedPoints += gradePoint * credit;
-            totalCredits += credit;
-        });
+    let sgpa = (totalSubjects === 0) ? 0 : (totalGradePoints / totalSubjects).toFixed(2);
+    document.getElementById("sgpaDisplay").textContent = `SGPA: ${sgpa}`;
+}
 
-        let sgpa = (totalWeightedPoints / totalCredits).toFixed(2);
-        document.getElementById("sgpaDisplay").textContent = `Your SGPA is: ${sgpa}`;
-    }
 
     function clearAll() {
         document.getElementById("subjectTable").innerHTML = "";
