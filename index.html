@@ -258,6 +258,10 @@
             "Semester 6": ["Humanoid Robotics", "Autonomous Vehicles & Drones", "Internship", "Major Project"]
         },
     };
+<script>
+    let subjectsByCourse = {
+        // ... your existing subjectsByCourse object
+    };
 
     function updateSemesters() {
         let course = document.getElementById("course").value;
@@ -285,45 +289,77 @@
         });
     }
 
-   function addSubject() {
-    let table = document.getElementById("subjectTable");
-    let subject = document.getElementById("subject").value;
-    let marks = parseFloat(document.getElementById("marks").value);
-    let totalMarks = parseFloat(document.getElementById("totalMarks").value);
-    let credit = parseFloat(document.getElementById("credit").value);
+    function addSubject() {
+        let table = document.getElementById("subjectTable");
+        let subject = document.getElementById("subject").value;
+        let marks = parseFloat(document.getElementById("marks").value);
+        let totalMarks = parseFloat(document.getElementById("totalMarks").value);
+        let credit = parseFloat(document.getElementById("credit").value);
 
-    if (
-        isNaN(marks) || isNaN(totalMarks) || isNaN(credit) ||
-        totalMarks <= 0 || marks < 0 || marks > totalMarks || credit <= 0
-    ) {
-        alert("Please enter valid marks and credit.");
-        return;
+        if (
+            isNaN(marks) || isNaN(totalMarks) || isNaN(credit) ||
+            totalMarks <= 0 || marks < 0 || marks > totalMarks || credit <= 0
+        ) {
+            alert("Please enter valid marks and credit.");
+            return;
+        }
+
+        let percentage = ((marks / totalMarks) * 100).toFixed(2);
+        let grade = percentage >= 90 ? "S" :
+                    percentage >= 75 ? "A" :
+                    percentage >= 60 ? "B" :
+                    percentage >= 50 ? "C" : "F";
+
+        let row = `
+            <tr>
+                <td>${subject}</td>
+                <td>${marks}</td>
+                <td>${totalMarks}</td>
+                <td>${percentage}%</td>
+                <td>${grade}</td>
+                <td>${credit}</td>
+                <td><button onclick="this.parentElement.parentElement.remove()">Delete</button></td>
+            </tr>
+        `;
+
+        table.innerHTML += row;
+
+        // Clear input fields after adding
+        document.getElementById("marks").value = "";
+        document.getElementById("totalMarks").value = "";
+        document.getElementById("credit").value = "";
     }
 
-    let percentage = ((marks / totalMarks) * 100).toFixed(2);
-    let grade = percentage >= 90 ? "S" :
-                percentage >= 75 ? "A" :
-                percentage >= 60 ? "B" :
-                percentage >= 50 ? "C" : "F";
+    function gradeToPoint(grade) {
+        switch (grade) {
+            case "S": return 10;
+            case "A": return 9;
+            case "B": return 8;
+            case "C": return 7;
+            default: return 0; // F or fail
+        }
+    }
 
-    let row = `
-        <tr>
-            <td>${subject}</td>
-            <td>${marks}</td>
-            <td>${totalMarks}</td>
-            <td>${percentage}%</td>
-            <td>${grade}</td>
-            <td>${credit}</td>
-            <td><button onclick="this.parentElement.parentElement.remove()">Delete</button></td>
-        </tr>
-    `;
+    function calculateSGPA() {
+        let rows = document.querySelectorAll("#subjectTable tr");
+        if (rows.length === 0) {
+            alert("Please add at least one subject.");
+            return;
+        }
 
-    table.innerHTML += row;
-}
+        let totalCredits = 0;
+        let totalWeightedPoints = 0;
 
+        rows.forEach(row => {
+            let grade = row.cells[4].textContent;
+            let credit = parseFloat(row.cells[5].textContent);
+            let gradePoint = gradeToPoint(grade);
+
+            totalWeightedPoints += gradePoint * credit;
+            totalCredits += credit;
         });
 
-        let sgpa = (totalGradePoints / rows.length).toFixed(2);
+        let sgpa = (totalWeightedPoints / totalCredits).toFixed(2);
         document.getElementById("sgpaDisplay").textContent = `Your SGPA is: ${sgpa}`;
     }
 
@@ -332,9 +368,9 @@
         document.getElementById("sgpaDisplay").textContent = "";
         document.getElementById("marks").value = "";
         document.getElementById("totalMarks").value = "";
+        document.getElementById("credit").value = "";
     }
 
-    // Initialize on load
     window.onload = updateSemesters;
 </script>
 
