@@ -294,6 +294,8 @@
             let grade = percentage >= 90 ? 10 : percentage >= 75 ? 8 : percentage >= 60 ? 6 : percentage >= 50 ? 5 : 0;
             let row = `<tr><td>${subject}</td><td>${marks}</td><td>${totalMarks}</td><td>${percentage}%</td><td>${grade}</td><td><button onclick="this.parentNode.parentNode.remove()">Delete</button></td></tr>`;
             table.innerHTML += row;
+        
+
         }
 
         function calculateSGPA() {
