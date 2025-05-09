@@ -175,148 +175,167 @@
         <div class="sgpa-display" id="sgpaDisplay"></div>
     </div>
 
-    <script>
-        let subjectsByCourse = {
-            "Civil Engineering": {
-                "Semester 1": ["Appied mathematics I","Applied Physics ","Applied Chemistry","Engineering Drawing","communication Skills","Workshop Practice","Enviromental Studies",],
-                "Semester 2": ["Applied Mathematics II","Strength of materials","Engineering Mechanics","Computer Applications","Building Materials & Construction","Serveying I","Engineering Graphics",],
-                "Semester 3": ["Surveying-II", "Structural Mechanics", "Hydraulics", "Building Drawing", "Estimating & Costing-I"],
-                "Semester 4": ["Steel Structure Design", "Water Supply & Waste Water Engineering", "Geotechnical Engineering", "Transportation Engineering", "Estimating & Costing-II"],
-                "Semester 5": ["Advanced RCC Design", "Environmental Engineering", "Construction Management", "Earthquake Engineering"],
-                "Semester 6": ["Project Work", "Industrial Training", "Entrepreneurship Development"]
-            },
-            "Mechanical Engineering": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Engineering Drawing","Communication Skills","Workshop Practice","Enviromental Studies",],
-                "Semester 2": ["Applied Mathematics II","Engineering Mechanics","Stength of Materials","Engineering Graphics","Computer Applications ","Basic Electronics & Elctrical Engineering","Workshop Practice II",],
-                "Semester 3": ["Thermodynamics", "Fluid Mechanics", "Strength of Materials", "Machine Drawing"],
-                "Semester 4": ["Manufacturing Processes", "Theory of Machines", "Heat & Mass Transfer", "Production Technology"],
-                "Semester 5": ["Automobile Engineering", "Mechatronics", "Industrial Engineering"],
-                "Semester 6": ["Robotics", "Project Work", "Internship"]
-            },
-            "Electrical Engineering": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Basic of Electrical Engineering","Engineering Drawing","Communication Skills","Worshop Practice","Enviromental Studies",],
-                "Semester 2": ["Applied Mathematics","Electronics I (Basic Electronics)","Electrical Circuits & Networks","Electrical Measurement & Instrumentation","Computer Applications","Engineering Graphics","Workshop Practice II",],
-                "Semester 3": ["Electrical Circuits", "Electrical Machines-I", "Electrical & Electronic Measurements"],
-                "Semester 4": ["Electrical Machines-II", "Power Systems", "Digital Electronics"],
-                "Semester 5": ["Power Electronics", "Electrical Drives", "Renewable Energy Systems"],
-                "Semester 6": ["PLC & SCADA", "Smart Grid Technologies", "Project Work"]
-            },
-            "Electronics and Communication Engineering": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Basics of Electronics Engineering","Engineering Drawing","Communication Skills","Workshop Practice","Environmental Studies",],
-                "Semester 2": ["Applied Mathematics II","Electrical Circuits & Networks","Electronic Devices & Circuits","Digital Electronics","Computer Applications","Engineering Graphics","Workshop Practice II",],
-                "Semester 3": ["Analog Electronics", "Digital Electronics", "Microprocessor & Microcontrollers", "Network Theory", "Circuit Design"],
-                "Semester 4": ["Communication Systems", "Embedded Systems", "Electronic Instruments", "Antenna & Wave Propagation", "VLSI Technology"],
-                "Semester 5": ["IoT & Wireless Sensor Networks", "Optical Fiber Communication", "Microwave Engineering", "Artificial Intelligence in Electronics"],
-                "Semester 6": ["Mobile & Satellite Communication", "Robotics & Automation", "Project Work", "Internship"]
-            },
-            "Computer Engineering": {
-                "Semester 1": [" Mathematics I","Applied Physics I","Applied Chemistry","Communication Skills in English","Engineering Graphics","Applied Chemistry Lab","Indroduction to IT System Lab","Sports and Yoga",],
-                "Semester 2": [" Mathematics II","Fundamentals of Electrical & Electronics Engineering","Fundamentals of Electrical & Electronics Engineering Lab","Applied physics II","Applied Physics Lab","Enviromental Science","Workshop Practice ","Problem Solving and Programming","Problem Solving and Programming Lab",],
-                "Semester 3": ["Internship I", "Computer Organisation", "Database Management System (DBMS)", "Database Management System Lab", "Programming in C","Programming in C Lab","Digital Computer Fundamentals","Digital Computer Fundamentals Lab","Web Technology Lab","Computer System Hardware Lab",],
-                "Semester 4": ["Computer Communication and Networks", "Object-Oriented Programming (Java, Python)", "Data Structures", "Community Skills in Indian knowledge system", "Object Oriented Programming Lab","Web Programming Lab","Data Structures Lab","Application Development Lab","Minor Project",],
-                "Semester 5": ["Project Management and Software Engineering", "Embedded System and Real time Operating System", "Ethical Hacking", "Operating System", "Virtualisation Technology and Cloud Computing","Fundamentals of Artificial Intelligence and Machine Learning","Embedded Systems and Real Time Operating System Lab","System Administration Lab","Virtualisation Technology and cloud computing Lab","Ethical Hacking Lab","Fundamentals of Artificial Intelligence and Machine Learning Lab","Seminar","Major Project"],
-                "Semester 6": ["Entrepreneurship and Startup", "Indian Constitution", "Computer Network Engineering Lab", "Smart Device Programming Lab","Internship",]
-            },
-            "Information Technology": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Basics of Information Technology","Communication Skills","Engineering Drawing","Environmental Studies","Workshop Practice",],
-                "Semester 2": ["Applied Mathematics II","Fundamentals of Programming (C Programming)","Digital Electronics","Computer Organization & Architecture","Operating Systems","Web Design & Development (HTML, CSS)","Practical Labs for Programming",],
-                "Semester 3": ["Database Management Systems", "Web Development", "Networking & Security", "Programming in C/C++"],
-                "Semester 4": ["Software Testing", "Cloud Computing", "Mobile Computing", "AI & Machine Learning"],
-                "Semester 5": ["Cyber Security", "Blockchain Technology", "Digital Marketing", "UI/UX Design"],
-                "Semester 6": ["Data Science", "Internship", "Project Work"]
-            },
-             "Automobile Engineering": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Basics of Mechanical Engineering","Engineering Drawing","Communication Skills","Environmental Studies","Workshop Practice",],
-                "Semester 2": ["Applied Mathematics II","Strength of Materials","Engineering Mechanics","Basic Electrical & Electronics Engineering","Computer-Aided Design (CAD)","Material Science & Metallurgy","Workshop Practice II",],
-                "Semester 3": ["Automobile Engines", "Transmission & Power Train", "Fuel & Emission Control", "Automotive Electrical Systems"],
-                "Semester 4": ["Chassis & Body Engineering", "Vehicle Dynamics", "Advanced Manufacturing in Automobiles", "Electric & Hybrid Vehicles"],
-                "Semester 5": ["Automotive Safety & Maintenance", "Automobile Air Conditioning", "Motor Vehicle Act & Insurance", "Alternative Fuels"],
-                "Semester 6": ["Autonomous Vehicles", "Project Work", "Industrial Training"]
-            },
-            "Aeronautical Engineering": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Basics of Aeronautical Engineering","Engineering Drawing","Communication Skills","Environmental Studies","Workshop Practice",],
-                "Semester 2": ["Applied Mathematics II","Engineering Mechanics","Strength of Materials","Thermodynamics","Computer-Aided Design (CAD)","Electrical & Electronics Engineering","Workshop Practice II",],
-                "Semester 3": ["Aerodynamics", "Aircraft Structures", "Aircraft Propulsion", "Engineering Thermodynamics"],
-                "Semester 4": ["Flight Mechanics", "Aircraft Materials & Manufacturing", "Avionics & Instrumentation", "Aircraft Maintenance Engineering"],
-                "Semester 5": ["Aerospace Systems & Navigation", "Space Technology", "UAV & Drone Technology", "Computational Fluid Dynamics"],
-                "Semester 6": ["Aircraft Design Project", "Industrial Internship"]
-            },
-            "Mining Engineering": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Basics of Mining Engineering","Engineering Drawing","Communication Skills","Environmental Studies","Workshop Practice",],
-                "Semester 2": ["Applied Mathematics II","Engineering Mechanics","Strength of Materials","Surveying I","Mine Development","Computer Applications in Mining","Workshop Practice II",],
-                "Semester 3": ["Mining Geology", "Mine Surveying", "Drilling & Blasting", "Mine Ventilation"],
-                "Semester 4": ["Mining Machinery", "Surface Mining", "Underground Mining Methods", "Rock Mechanics"],
-                "Semester 5": ["Mine Safety & Disaster Management", "Mineral Processing", "Mine Economics", "Open Cast Mining"],
-                "Semester 6": ["Environmental Management in Mining", "Internship", "Project Work"]
-            },
-            "Robotics and Automation Engineering": {
-                "Semester 1": ["Applied Mathematics I","Applied Physics","Applied Chemistry","Basics of Robotics Engineering","Engineering Drawing","Communication Skills","Environmental Studies","Workshop Practice",],
-                "Semester 2": ["Applied Mathematics II","Fundamentals of Electronics & Electrical Engineering","Engineering Mechanics","Programming in C/Python","Digital Electronics","Computer-Aided Design (CAD)","Workshop Practice II",],
-                "Semester 3": ["Fundamentals of Robotics", "Sensors & Actuators", "Embedded Systems", "Control System Engineering"],
-                "Semester 4": ["Industrial Automation", "PLC & SCADA", "Robotics Programming", "Artificial Intelligence in Robotics"],
-                "Semester 5": ["Mechatronics & Robotics Integration", "Computer Vision", "3D Printing & Rapid Prototyping", "IoT & Smart Robotics"],
-                "Semester 6": ["Humanoid Robotics", "Autonomous Vehicles & Drones", "Internship", "Major Project"]
-            },
- 
-        };
-        function updateSemesters() {  
-            let course = document.getElementById("course").value;  
-            let semesterDropdown = document.getElementById("semester");  
-            semesterDropdown.innerHTML = "";  
-            for (let semester in subjectsByCourse[course]) {  
-                let option = document.createElement("option");  
-                option.value = semester;  
-                option.textContent = semester;  
-                semesterDropdown.appendChild(option);  
-            }  
-            updateSubjects();  
-        }  
-  
-        function updateSubjects() {  
-            let course = document.getElementById("course").value;  
-            let semester = document.getElementById("semester").value;  
-            let subjectDropdown = document.getElementById("subject");  
-            subjectDropdown.innerHTML = "";  
-            subjectsByCourse[course][semester].forEach(subject => {  
-                let option = document.createElement("option");  
-                option.value = subject;  
-                option.textContent = subject;  
-                subjectDropdown.appendChild(option);  
-            });  
-        }  
+   <script>
+    let subjectsByCourse = {
+        "Civil Engineering": {
+            "Semester 1": ["Common Subjects"],
+            "Semester 2": ["Common Subjects"],
+            "Semester 3": ["Surveying-II", "Structural Mechanics", "Hydraulics", "Building Drawing", "Estimating & Costing-I"],
+            "Semester 4": ["Steel Structure Design", "Water Supply & Waste Water Engineering", "Geotechnical Engineering", "Transportation Engineering", "Estimating & Costing-II"],
+            "Semester 5": ["Advanced RCC Design", "Environmental Engineering", "Construction Management", "Earthquake Engineering"],
+            "Semester 6": ["Project Work", "Industrial Training", "Entrepreneurship Development"]
+        },
+        "Mechanical Engineering": {
+            "Semester 1": ["Common Subjects"],
+            "Semester 2": ["Common Subjects"],
+            "Semester 3": ["Thermodynamics", "Fluid Mechanics", "Strength of Materials", "Machine Drawing"],
+            "Semester 4": ["Manufacturing Processes", "Theory of Machines", "Heat & Mass Transfer", "Production Technology"],
+            "Semester 5": ["Automobile Engineering", "Mechatronics", "Industrial Engineering"],
+            "Semester 6": ["Robotics", "Project Work", "Internship"]
+        },
+        "Electrical Engineering": {
+            "Semester 1": ["Common Subjects"],
+            "Semester 2": ["Common Subjects"],
+            "Semester 3": ["Electrical Circuits", "Electrical Machines-I", "Electrical & Electronic Measurements"],
+            "Semester 4": ["Electrical Machines-II", "Power Systems", "Digital Electronics"],
+            "Semester 5": ["Power Electronics", "Electrical Drives", "Renewable Energy Systems"],
+            "Semester 6": ["PLC & SCADA", "Smart Grid Technologies", "Project Work"]
+        },
+        "Electronics and Communication Engineering": {
+            "Semester 1": ["Common Subjects"],
+            "Semester 2": ["Common Subjects"],
+            "Semester 3": ["Analog Electronics", "Digital Electronics", "Microprocessor & Microcontrollers", "Network Theory", "Circuit Design"],
+            "Semester 4": ["Communication Systems", "Embedded Systems", "Electronic Instruments", "Antenna & Wave Propagation", "VLSI Technology"],
+            "Semester 5": ["IoT & Wireless Sensor Networks", "Optical Fiber Communication", "Microwave Engineering", "Artificial Intelligence in Electronics"],
+            "Semester 6": ["Mobile & Satellite Communication", "Robotics & Automation", "Project Work", "Internship"]
+        },
+        "Computer Science and Engineering": {
+            "Semester 1": ["Common Subjects"],
+            "Semester 2": ["Common Subjects"],
+            "Semester 3": ["Data Structures & Algorithms", "Computer Networks", "Database Management System (DBMS)", "Operating Systems", "Web Technology"],
+            "Semester 4": ["Software Engineering", "Object-Oriented Programming (Java, Python)", "Computer Graphics", "Cloud Computing", "Cyber Security"],
+            "Semester 5": ["Machine Learning & AI", "Mobile App Development", "Ethical Hacking", "Data Analytics", "Internet of Things (IoT)"],
+            "Semester 6": ["Full Stack Development", "Big Data Technologies", "Project Work", "Industrial Training"]
+        },
+        "Information Technology": {
+            "Semester 1": ["Common with CSE"],
+            "Semester 2": ["Common with CSE"],
+            "Semester 3": ["Database Management Systems", "Web Development", "Networking & Security", "Programming in C/C++"],
+            "Semester 4": ["Software Testing", "Cloud Computing", "Mobile Computing", "AI & Machine Learning"],
+            "Semester 5": ["Cyber Security", "Blockchain Technology", "Digital Marketing", "UI/UX Design"],
+            "Semester 6": ["Data Science", "Internship", "Project Work"]
+        },
+        "Automobile Engineering": {
+            "Semester 1": ["Common with Mechanical"],
+            "Semester 2": ["Common with Mechanical"],
+            "Semester 3": ["Automobile Engines", "Transmission & Power Train", "Fuel & Emission Control", "Automotive Electrical Systems"],
+            "Semester 4": ["Chassis & Body Engineering", "Vehicle Dynamics", "Advanced Manufacturing in Automobiles", "Electric & Hybrid Vehicles"],
+            "Semester 5": ["Automotive Safety & Maintenance", "Automobile Air Conditioning", "Motor Vehicle Act & Insurance", "Alternative Fuels"],
+            "Semester 6": ["Autonomous Vehicles", "Project Work", "Industrial Training"]
+        },
+        "Aeronautical Engineering": {
+            "Semester 1": ["Common with Mechanical"],
+            "Semester 2": ["Common with Mechanical"],
+            "Semester 3": ["Aerodynamics", "Aircraft Structures", "Aircraft Propulsion", "Engineering Thermodynamics"],
+            "Semester 4": ["Flight Mechanics", "Aircraft Materials & Manufacturing", "Avionics & Instrumentation", "Aircraft Maintenance Engineering"],
+            "Semester 5": ["Aerospace Systems & Navigation", "Space Technology", "UAV & Drone Technology", "Computational Fluid Dynamics"],
+            "Semester 6": ["Aircraft Design Project", "Industrial Internship"]
+        },
+        "Mining Engineering": {
+            "Semester 1": ["Common with Civil"],
+            "Semester 2": ["Common with Civil"],
+            "Semester 3": ["Mining Geology", "Mine Surveying", "Drilling & Blasting", "Mine Ventilation"],
+            "Semester 4": ["Mining Machinery", "Surface Mining", "Underground Mining Methods", "Rock Mechanics"],
+            "Semester 5": ["Mine Safety & Disaster Management", "Mineral Processing", "Mine Economics", "Open Cast Mining"],
+            "Semester 6": ["Environmental Management in Mining", "Internship", "Project Work"]
+        },
+        "Robotics and Automation Engineering": {
+            "Semester 1": ["Common with Mechanical & Electronics"],
+            "Semester 2": ["Common with Mechanical & Electronics"],
+            "Semester 3": ["Fundamentals of Robotics", "Sensors & Actuators", "Embedded Systems", "Control System Engineering"],
+            "Semester 4": ["Industrial Automation", "PLC & SCADA", "Robotics Programming", "Artificial Intelligence in Robotics"],
+            "Semester 5": ["Mechatronics & Robotics Integration", "Computer Vision", "3D Printing & Rapid Prototyping", "IoT & Smart Robotics"],
+            "Semester 6": ["Humanoid Robotics", "Autonomous Vehicles & Drones", "Internship", "Major Project"]
+        },
+    };
 
-        function addSubject() {
-    let table = document.getElementById("subjectTable");
-    let subject = document.getElementById("subject").value;
-    let marks = parseFloat(document.getElementById("marks").value);
-    let totalMarks = parseFloat(document.getElementById("totalMarks").value);
-
-    if (isNaN(marks) || isNaN(totalMarks) || totalMarks <= 0 || marks > totalMarks) {
-        alert("Please enter valid marks.");
-        return;
+    function updateSemesters() {
+        let course = document.getElementById("course").value;
+        let semesterDropdown = document.getElementById("semester");
+        semesterDropdown.innerHTML = "";
+        for (let semester in subjectsByCourse[course]) {
+            let option = document.createElement("option");
+            option.value = semester;
+            option.textContent = semester;
+            semesterDropdown.appendChild(option);
+        }
+        updateSubjects();
     }
 
-    let percentage = ((marks / totalMarks) * 100).toFixed(2);
-    let grade;
+    function updateSubjects() {
+        let course = document.getElementById("course").value;
+        let semester = document.getElementById("semester").value;
+        let subjectDropdown = document.getElementById("subject");
+        subjectDropdown.innerHTML = "";
+        subjectsByCourse[course][semester].forEach(subject => {
+            let option = document.createElement("option");
+            option.value = subject;
+            option.textContent = subject;
+            subjectDropdown.appendChild(option);
+        });
+    }
 
-    if (percentage >= 90) grade = "S";
-    else if (percentage >= 80) grade = "A";
-    else if (percentage >= 70) grade = "B";
-    else if (percentage >= 60) grade = "C";
-    else if (percentage >= 50) grade = "D";
-    else if (percentage >= 40) grade = "E";   
-    else grade = "F";
+    function addSubject() {
+        let table = document.getElementById("subjectTable");
+        let subject = document.getElementById("subject").value;
+        let marks = parseFloat(document.getElementById("marks").value);
+        let totalMarks = parseFloat(document.getElementById("totalMarks").value);
 
-    let row = `<tr>
-        <td>${subject}</td>
-        <td>${marks}</td>
-        <td>${totalMarks}</td>
-        <td>${percentage}%</td>
-        <td>${grade}</td>
-        <td><button onclick="this.parentNode.parentNode.remove()">Delete</button></td>
-    </tr>`;
-    table.innerHTML += row;
-}
-    </script>
+        if (isNaN(marks) || isNaN(totalMarks) || totalMarks <= 0 || marks < 0 || marks > totalMarks) {
+            alert("Please enter valid marks.");
+            return;
+        }
+
+        let percentage = ((marks / totalMarks) * 100).toFixed(2);
+        let grade = percentage >= 90 ? 10 : percentage >= 75 ? 8 : percentage >= 60 ? 6 : percentage >= 50 ? 5 : 0;
+
+        let row = `
+            <tr>
+                <td>${subject}</td>
+                <td>${marks}</td>
+                <td>${totalMarks}</td>
+                <td>${percentage}%</td>
+                <td>${grade}</td>
+                <td><button onclick="this.parentElement.parentElement.remove()">Delete</button></td>
+            </tr>
+        `;
+
+        table.innerHTML += row;
+    }
+
+    function calculateSGPA() {
+        let rows = document.querySelectorAll("#subjectTable tr");
+        if (rows.length === 0) {
+            alert("Please add at least one subject.");
+            return;
+        }
+
+        let totalGradePoints = 0;
+        rows.forEach(row => {
+            totalGradePoints += parseInt(row.cells[4].textContent);
+        });
+
+        let sgpa = (totalGradePoints / rows.length).toFixed(2);
+        document.getElementById("sgpaDisplay").textContent = `Your SGPA is: ${sgpa}`;
+    }
+
+    function clearAll() {
+        document.getElementById("subjectTable").innerHTML = "";
+        document.getElementById("sgpaDisplay").textContent = "";
+        document.getElementById("marks").value = "";
+        document.getElementById("totalMarks").value = "";
+    }
+</script>
+
 </body>
 </html>
